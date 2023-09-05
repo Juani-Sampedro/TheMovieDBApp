@@ -16,6 +16,9 @@ class SubHeader extends StatelessWidget {
   final String originalTitle;
   final String dateRelease;
   final String imagePath;
+  final SizedBox separatorSizedBox = const SizedBox(
+    height: 20,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +32,7 @@ class SubHeader extends StatelessWidget {
           originalTitle: originalTitle,
           dateRelease: dateRelease,
         ),
+        separatorSizedBox,
         Center(
           child: MovieImage(
             imagePath: imagePath,

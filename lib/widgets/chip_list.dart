@@ -1,35 +1,60 @@
 import 'package:flutter/material.dart';
+import '/shared/constants.dart';
+import '/model/genre.dart';
 
-class Genres extends StatelessWidget {
-  const Genres({
+class GenresChipList extends StatelessWidget {
+  const GenresChipList({
     super.key,
     required this.genres,
   });
 
-  final List<String> genres;
-  static const double labelPaddingEdgeInsets = 2.0;
-  static const double spacingWrap = 6.0;
-  static const double runSpacingWrap = 6.0;
-  static const double paddingEdgeInsets = 8.0;
+  final List<Genre> genres;
+  final double labelPaddingEdgeInsets = 2.0;
+  final double spacingWrap = 6.0;
+  final double runSpacingWrap = 6.0;
+  final double paddingEdgeInsets = 8.0;
+  final Color circleAvatarBackgroundColor = const Color(0XFF70B45A);
+  final TextStyle genresFirstLetterTextStyle = const TextStyle(
+    fontFamily: ConstantsClass.homeTextFontFamily,
+    fontSize: 20,
+    color: Color(0xFF114800),
+    fontWeight: FontWeight.bold,
+  );
+  final TextStyle genresNamesTextStyle = const TextStyle(
+    fontSize: 20,
+    fontFamily: ConstantsClass.homeTextFontFamily,
+    color: Color(0XFFA1D890),
+    fontWeight: FontWeight.bold,
+    shadows: [
+      BoxShadow(
+        color: Colors.black,
+        offset: Offset(2, 2),
+        blurRadius: 4,
+        spreadRadius: 2,
+      ),
+    ],
+  );
+
+  final Color genreBackgroundColor = const Color(0xFF114800);
 
   Widget _buildChip(String label) {
     return Chip(
-      labelPadding: const EdgeInsets.all(labelPaddingEdgeInsets),
+      labelPadding: EdgeInsets.all(
+        labelPaddingEdgeInsets,
+      ),
       avatar: CircleAvatar(
-        backgroundColor: Colors.black,
+        backgroundColor: circleAvatarBackgroundColor,
         child: Text(
+          style: genresFirstLetterTextStyle,
           label[0].toUpperCase(),
         ),
       ),
       label: Text(
         label,
-        style: const TextStyle(
-          color: Colors.white,
-          fontStyle: FontStyle.italic,
-        ),
+        style: genresNamesTextStyle,
       ),
-      backgroundColor: Colors.red.shade300,
-      padding: const EdgeInsets.all(paddingEdgeInsets),
+      backgroundColor: genreBackgroundColor,
+      padding: EdgeInsets.all(paddingEdgeInsets),
     );
   }
 
@@ -39,12 +64,7 @@ class Genres extends StatelessWidget {
       spacing: spacingWrap,
       runSpacing: runSpacingWrap,
       children: [
-        for (int index = 0; index < genres.length; index++)
-          _buildChip(
-            genres.elementAt(
-              index,
-            ),
-          ),
+        for (Genre genre in genres) _buildChip(genre.name),
       ],
     );
   }

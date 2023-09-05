@@ -17,8 +17,12 @@ class MovieSubtitle extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SubtitleText(text: originalTitle),
-          SubtitleText(text: dateRelease),
+          SubtitleText(
+            text: originalTitle,
+          ),
+          SubtitleText(
+            text: dateRelease,
+          ),
         ],
       ),
     );

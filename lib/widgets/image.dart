@@ -6,8 +6,8 @@ class MovieImage extends StatelessWidget {
     required this.imagePath,
   });
 
-  static const double imContainerWidth = 300;
-  static const double imContainerHeight = 300;
+  static const double imContainerWidth = 250;
+  static const double imContainerHeight = 250;
   static const double imBoxDecorationWidth = 2.5;
   static const double imBorderRadius = 20;
   static const double imBorderSize = 48;
@@ -15,20 +15,14 @@ class MovieImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: imContainerHeight,
       width: imContainerWidth,
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: imBoxDecorationWidth,
-          color: Colors.black,
-        ),
-      ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(imBorderRadius),
         child: SizedBox.fromSize(
           size: const Size.fromRadius(imBorderSize),
-          child: Image.asset(
+          child: Image.network(
             imagePath,
             fit: BoxFit.fill,
           ),

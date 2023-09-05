@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'movie_detail.dart';
+import 'shared/constants.dart';
+import 'routes/home.dart';
 
 void main() => runApp(const MyApp());
 
@@ -10,8 +11,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MovieDetail(),
+    return MaterialApp(
+      home: const Home(),
+      routes: {
+        ConstantsClass.homeRouteName: (context) => const Home(),
+      },
     );
   }
 }

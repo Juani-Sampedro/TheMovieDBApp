@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../shared/constants.dart';
+import '/shared/constants.dart';
 
 class SubtitleText extends StatelessWidget {
   const SubtitleText({
@@ -8,18 +8,19 @@ class SubtitleText extends StatelessWidget {
   });
 
   final String text;
-  static const double subtitleTextFontSize = 15.0;
+  final TextStyle subtitleTextStyle = const TextStyle(
+    fontSize: 15,
+    fontFamily: ConstantsClass.homeTextFontFamily,
+    fontWeight: FontWeight.bold,
+    color: Colors.grey,
+    fontStyle: FontStyle.italic,
+  );
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: const TextStyle(
-        fontFamily: ConstantsClass.textFont,
-        fontSize: subtitleTextFontSize,
-        color: Colors.grey,
-        fontStyle: FontStyle.italic,
-      ),
+      style: subtitleTextStyle,
     );
   }
 }

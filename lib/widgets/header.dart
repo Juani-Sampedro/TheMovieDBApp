@@ -14,7 +14,7 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Image.asset(
+      child: Image.network(
         backdrop,
         fit: BoxFit.cover,
         width: hdImageWidth,
