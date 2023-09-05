@@ -1,14 +1,16 @@
 class Movie {
-  final String movieOverview;
-  final String voteAverage;
-  final List<String> genres;
-  final String originalTitle;
-  final String dateRelease;
-  final String movieTitle;
-  final String imagePath;
-  final String backdropPath;
+  late List<int> genres;
+  late String language;
+  late String originalTitle;
+  late String dateRelease;
+  late String movieTitle;
+  late String imagePath;
+  late String backdropPath;
+  late String movieOverview;
+  late int voteCount;
+  late double voteAverage;
 
-  const Movie({
+  Movie({
     required this.movieOverview,
     required this.voteAverage,
     required this.genres,
@@ -17,25 +19,24 @@ class Movie {
     required this.movieTitle,
     required this.imagePath,
     required this.backdropPath,
+    required this.voteCount,
+    required this.language,
   });
 
-  factory Movie.mockMovie() {
-    return const Movie(
-      voteAverage: '7.8',
-      movieOverview:
-          'While working underground to fix a water main, Brooklyn plumbers—and brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new world. But when the brothers are separated, Mario embarks on an epic quest to find Luigi.',
-      genres: [
-        'Adventure',
-        'Animation',
-        'Comedy',
-        'Family',
-        'Fantasy',
-      ],
-      originalTitle: 'Original Title: The Super Mario Bros. Movie',
-      dateRelease: '2023-04-05',
-      movieTitle: 'The Super Mario Bros. Movie',
-      imagePath: 'assets/images/poster.jpg',
-      backdropPath: 'assets/images/backdrop.jpg',
+  factory Movie.fromJson(Map<String, dynamic> data) {
+    return Movie(
+      movieOverview: data['overview'],
+      voteCount: data['vote_count'],
+      voteAverage: data['vote_average'].toDouble(),
+      genres: List<int>.from(
+        data['genre_ids'],
+      ),
+      originalTitle: data['original_title'],
+      dateRelease: data['release_date'],
+      movieTitle: data['title'],
+      imagePath: 'https://image.tmdb.org/t/p/w500${data['poster_path']}',
+      backdropPath: 'https://image.tmdb.org/t/p/w500${data['backdrop_path']}',
+      language: data['original_language'],
     );
   }
 }

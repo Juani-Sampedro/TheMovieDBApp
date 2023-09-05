@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
+import '/model/genre.dart';
+import '/shared/constants.dart';
 import 'chip_list.dart';
 import 'description_text.dart';
 import 'icon.dart';
 
 class Description extends StatelessWidget {
-  static const double dsSpaceBetweenChipList = 2;
-  static const double dsPadding = 32;
-  static const double dsSizedBoxHeight = 10;
-  static const double dsVoteAvgFontSize = 15.0;
-  static const double dsChipListFontSize = 10.0;
+  final double dsSpaceBetweenChipList = 2;
+  final double dsPadding = 32;
+  final double dsSizedBoxHeight = 10;
+  final double lastDsSizedBoxHeight = 80;
+  final double dsVoteAvgFontSize = 15.0;
+  final double dsChipListFontSize = 10.0;
   int numberOfFullStars = 0;
   int numberOfHalfStars = 0;
   int numberOfBorderStars = 5;
 
   final String description;
-  final String voteAverage;
-  final List<String> genres;
+  final double voteAverage;
+  final List<Genre> genres;
+  final TextStyle voteAvgTextStyle = const TextStyle(
+    fontSize: 17,
+    fontFamily: ConstantsClass.tekturFontFamily,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
 
   Description({
     super.key,
@@ -24,9 +33,8 @@ class Description extends StatelessWidget {
     required this.genres,
   });
 
-  void updateNumberOfStars(String voteAverage) {
-    double voteAverageAsDouble = double.parse(voteAverage);
-    switch (voteAverageAsDouble) {
+  void updateNumberOfStars(double voteAverage) {
+    switch (voteAverage) {
       case 10.0:
         numberOfFullStars = 5;
         numberOfHalfStars = 0;
@@ -89,9 +97,12 @@ class Description extends StatelessWidget {
   Widget build(BuildContext context) {
     updateNumberOfStars(voteAverage);
     return Container(
-      padding: const EdgeInsets.all(dsPadding),
+      padding: EdgeInsets.symmetric(horizontal: dsPadding),
       child: Column(
         children: [
+          SizedBox(
+            height: dsSizedBoxHeight,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -107,27 +118,30 @@ class Description extends StatelessWidget {
                 icon: Icons.star_border,
                 numberOfIconsCreated: numberOfBorderStars,
               ),
-              const SizedBox(height: dsSizedBoxHeight),
-              DescriptionText(
-                text: voteAverage,
+              SizedBox(
+                height: dsSizedBoxHeight,
+              ),
+              Text(
+                '$voteAverage',
+                style: voteAvgTextStyle,
               ),
             ],
           ),
-          const SizedBox(
+          SizedBox(
             height: dsSizedBoxHeight,
           ),
-          Genres(
+          GenresChipList(
             genres: genres,
           ),
-          const SizedBox(
+          SizedBox(
             height: dsSizedBoxHeight,
           ),
           DescriptionText(
             text: description,
             align: TextAlign.justify,
           ),
-          const SizedBox(
-            height: dsSizedBoxHeight,
+          SizedBox(
+            height: lastDsSizedBoxHeight,
           ),
         ],
       ),
