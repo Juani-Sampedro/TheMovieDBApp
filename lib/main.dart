@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'shared/constants.dart';
-import 'routes/home.dart';
+import 'src/core/util/constants.dart';
+import 'src/presentation/view/home.dart';
 
 void main() => runApp(const MyApp());
 
