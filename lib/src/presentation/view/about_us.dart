@@ -1,20 +1,23 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/util/colors.dart';
 import '../../core/util/constants.dart';
 
 class AboutUs extends StatelessWidget {
-  const AboutUs({super.key});
+  const AboutUs({
+    super.key,
+    required this.text,
+  });
 
-  final String textAboutUs =
-      'This App was created by \n Juan Ignacio Sampedro. \n Globant Internship. \n 2023.';
+  final String text;
   final int durationOfTextAnimation = 80;
   final double animatedTextFontSize = 40;
-  final Color scaffoldBackgroundColor = Colors.white;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: scaffoldBackgroundColor,
+      backgroundColor: AppColors.appBarColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -24,14 +27,12 @@ class AboutUs extends StatelessWidget {
                 TyperAnimatedText(
                   textAlign: TextAlign.justify,
                   textStyle: TextStyle(
-                    fontFamily: ConstantsClass.appFontFamily,
-                    color: Colors.black,
+                    fontFamily: Constants.appFontFamily,
+                    color: AppColors.appNameFontColor,
                     fontSize: animatedTextFontSize,
                   ),
-                  textAboutUs,
-                  speed: Duration(
-                    milliseconds: durationOfTextAnimation,
-                  ),
+                  text,
+                  speed: Duration(milliseconds: durationOfTextAnimation),
                 ),
               ],
             ),

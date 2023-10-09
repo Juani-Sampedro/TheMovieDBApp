@@ -1,42 +1,42 @@
-import 'dart:convert';
-import 'package:flutter/services.dart';
-import '../../core/util/constants.dart';
+import '../../core/util/states.dart';
 import '../../domain/model/genre.dart';
 import '../../domain/repository/interfaces/i_genre_repository.dart';
+import '../datasource/remote/genres_api_service.dart';
+import '../datasource/remote/i_api_service.dart';
+import '../model/genre_page_model.dart';
+import 'package:http/http.dart' as http;
 
-class GenreJsonManagement implements IGenreRepository<List<Genre>> {
+class GenreRepository implements IGenreRepository {
+  final IApiService apiService;
+
+  GenreRepository({
+    IApiService? apiService,
+  }) : apiService = apiService ?? GenresApiService(client: http.Client());
+
   @override
-  Future<List<Genre>> getData() async {
-    String genreData = await rootBundle.loadString(
-      ConstantsClass.genreJsonPath,
-    );
-    var genresDecoded = jsonDecode(genreData);
-    List<dynamic> listGenres = genresDecoded['genres'];
-    return listGenres
-        .map(
-          (genre) => Genre.fromJson(
-            genre,
-          ),
-        )
-        .toList();
+  Future<DataState> getData() async {
+    try {
+      final GenrePageModel response = await apiService.fetch();
+      return DataState(
+        resultState: response.results.isEmpty ? ResultState.empty : ResultState.success,
+        data: response.results.map((genre) => genre).toList(),
+      );
+    } catch (e) {
+      return DataState(
+        resultState: ResultState.error,
+        errorMsg: e.toString(),
+      );
+    }
   }
 
   @override
-  List<Genre> getNameFromIds(
+  dynamic getNameFromIds(
     List<int> genresIds,
-    List<Genre> genres,
+    dynamic genres,
   ) {
     List<Genre> selectedGenres = [];
-    selectedGenres = genres
-        .where(
-          (
-            genre,
-          ) =>
-              genresIds.contains(
-            genre.id,
-          ),
-        )
-        .toList();
+    selectedGenres =
+        genres.where((genre) => genresIds.contains(genre.id)).toList();
     return selectedGenres;
   }
 }

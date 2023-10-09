@@ -28,6 +28,9 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  path_provider: ^2.1.1
+  cached_network_image: ^3.2.3
+  http: ^1.1.0
   animated_text_kit: ^4.2.1
   flutter:
     sdk: flutter
@@ -40,7 +43,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  mockito: ^5.4.2
+  build_runner: ^2.4.6
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -76,6 +80,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+    - family: Caprasimo
+      fonts:
+        - asset: fonts/Caprasimo-Regular.ttf
     - family: Handjet
       fonts:
         - asset: fonts/Handjet-VariableFont_ELGR,ELSH,wght.ttf
