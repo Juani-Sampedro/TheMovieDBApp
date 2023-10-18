@@ -22,21 +22,4 @@ class Movie {
     required this.voteCount,
     required this.language,
   });
-
-  factory Movie.fromJson(Map<String, dynamic> data) {
-    return Movie(
-      movieOverview: data['overview'],
-      voteCount: data['vote_count'],
-      voteAverage: data['vote_average'].toDouble(),
-      genres: List<int>.from(
-        data['genre_ids'],
-      ),
-      originalTitle: data['original_title'],
-      dateRelease: data['release_date'],
-      movieTitle: data['title'],
-      imagePath: 'https://image.tmdb.org/t/p/w500${data['poster_path']}',
-      backdropPath: 'https://image.tmdb.org/t/p/w500${data['backdrop_path']}',
-      language: data['original_language'],
-    );
-  }
 }

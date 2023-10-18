@@ -1,92 +1,54 @@
 import 'package:flutter/material.dart';
-import '../../domain/model/movie.dart';
-import '../../domain/repository/interfaces/i_movie_repository.dart';
-import '../widgets/app_bar.dart';
-import '../widgets/display_movie_detail.dart';
-import '../widgets/error_message.dart';
-import 'about_us.dart';
-import '../../data/repository/movie_repository_class.dart';
 
+import '../../core/util/colors.dart';
+import '../bloc/movie_list_bloc.dart';
+import '../widget/custom_scaffold.dart';
+import '../widget/stream.dart';
+import '../widget/text_under_app_bar.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({
+    super.key,
+    required this.bloc,
+  });
 
-  static const double paddingInListView = 15;
+  final MoviesBloc bloc;
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  final IMovieRepository<List<Movie>> movieJsonManagement = MovieJsonManagement();
-  late Future<List<Movie>> moviesData;
-
-  final double dividerHeight = 50;
-  final double dividerIndent = 20;
-  final double endDividerIndent = 20;
-  final double dividerThickness = 5;
-  final String backgroundWhiteImagePath = "assets/images/white.png";
+  final Icon topRatedIcon = const Icon(
+    Icons.leaderboard,
+    color: AppColors.iconInTextUnderAppBarColor,
+  );
 
   @override
   void initState() {
-    moviesData = movieJsonManagement.getData();
     super.initState();
+    widget.bloc.initialize();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.bloc.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MyAppBar(
-        appBar: AppBar(),
-      ),
-      body: FutureBuilder<List<Movie>>(
-        future: moviesData,
-        builder: (
-          BuildContext context,
-          AsyncSnapshot snapshot,
-        ) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const AboutUs();
-          } else if (snapshot.hasError) {
-            return const ErrorMessage();
-          } else {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                image: DecorationImage(
-                  image: AssetImage(
-                    backgroundWhiteImagePath,
-                  ),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: SafeArea(
-                child: ListView.separated(
-                  padding: const EdgeInsets.all(
-                    Home.paddingInListView,
-                  ),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (
-                    BuildContext context,
-                    int index,
-                  ) {
-                    return DisplayMovie(
-                      movie: snapshot.data[index],
-                    );
-                  },
-                  separatorBuilder: (
-                    BuildContext context,
-                    int index,
-                  ) =>
-                      Divider(
-                    height: dividerHeight,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            );
-          }
-        },
+    const String topRatedText = ' Top Rated Movies ';
+    return CustomScaffold(
+      body: Column(
+        children: [
+          TextUnderAppBar(
+            text: topRatedText,
+            icon: topRatedIcon,
+          ),
+          Flexible(
+              child: CustomStreamBuilder.gridView(data: widget.bloc.allMovies)),
+        ],
       ),
     );
   }
