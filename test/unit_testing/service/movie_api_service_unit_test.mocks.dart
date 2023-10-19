@@ -72,25 +72,11 @@ class _FakeStreamedResponse_3 extends _i1.SmartFake
 class MockMovieListApiService extends _i1.Mock
     implements _i4.MovieListApiService {
   @override
-  String get endpoint => (super.noSuchMethod(
-        Invocation.getter(#endpoint),
-        returnValue: '',
-        returnValueForMissingStub: '',
-      ) as String);
-
-  @override
   String get exceptionMessage => (super.noSuchMethod(
         Invocation.getter(#exceptionMessage),
         returnValue: '',
         returnValueForMissingStub: '',
       ) as String);
-
-  @override
-  int get correctStatusCode => (super.noSuchMethod(
-        Invocation.getter(#correctStatusCode),
-        returnValue: 0,
-        returnValueForMissingStub: 0,
-      ) as int);
 
   @override
   _i2.Client get client => (super.noSuchMethod(
@@ -106,16 +92,16 @@ class MockMovieListApiService extends _i1.Mock
       ) as _i2.Client);
 
   @override
-  _i5.Future<_i3.MoviePageModel> fetch() => (super.noSuchMethod(
+  _i5.Future<_i3.MoviePageModel> fetch(String? endpoint) => (super.noSuchMethod(
         Invocation.method(
           #fetch,
-          [],
+          [endpoint],
         ),
         returnValue: _i5.Future<_i3.MoviePageModel>.value(_FakeMoviePageModel_1(
           this,
           Invocation.method(
             #fetch,
-            [],
+            [endpoint],
           ),
         )),
         returnValueForMissingStub:
@@ -123,7 +109,7 @@ class MockMovieListApiService extends _i1.Mock
           this,
           Invocation.method(
             #fetch,
-            [],
+            [endpoint],
           ),
         )),
       ) as _i5.Future<_i3.MoviePageModel>);

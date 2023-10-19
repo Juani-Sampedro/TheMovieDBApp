@@ -33,6 +33,7 @@ Future<void> main() async {
           resultState: resultState,
           data: [
             Movie(
+              id:1,
               movieOverview: 'mo',
               voteAverage: 10,
               genres: [],
@@ -42,7 +43,7 @@ Future<void> main() async {
               imagePath: 'assets/images/backdrop.jpg',
               backdropPath: 'assets/images/backdrop.jpg',
               voteCount: 9,
-              language: 'EN',
+              language: 'EN', categories: [],
             ),
           ],
         );

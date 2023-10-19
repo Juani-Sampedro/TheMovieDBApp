@@ -18,8 +18,8 @@ void main() {
           http.Response('{"genres": [{"id": 28,"name": "Action"}]}', 200),
     );
 
-    GenresApiService apiService = GenresApiService(client: mockClient);
-    final fetch = (await apiService.fetch()).results;
+    GenresApiService apiService = GenresApiService();
+    final fetch = (await apiService.fetch('/genre/movie/list?')).results;
 
     expect(
       fetch,
@@ -34,10 +34,10 @@ void main() {
       (_) async => throw Exception('Failed to load the genres'),
     );
 
-    GenresApiService apiService = GenresApiService(client: mockClient);
+    GenresApiService apiService = GenresApiService();
 
     expect(
-      apiService.fetch(),
+      apiService.fetch(''),
       throwsException,
     );
   });

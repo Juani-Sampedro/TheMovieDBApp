@@ -8,6 +8,7 @@ import 'package:movie_db_app/src/presentation/widget/image.dart';
 void main() {
   Widget buildWidget() {
     final movie = Movie(
+      id: 1,
       movieOverview: 'overview',
       voteAverage: 2,
       genres: [],
@@ -17,7 +18,7 @@ void main() {
       imagePath: 'assets/images/gradient.jpg',
       backdropPath: '',
       voteCount: 2,
-      language: 'EN',
+      language: 'EN', categories: [],
     );
 
     return MaterialApp(

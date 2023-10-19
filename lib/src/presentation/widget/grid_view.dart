@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../config/route/app_routes.dart';
 import '../../core/util/constants.dart';
 import '../../domain/model/movie.dart';
+import '../bloc/genres_in_movie_detail_bloc.dart';
 
 class CustomGridView extends StatefulWidget {
   final List<Movie> movies;
@@ -57,6 +59,10 @@ class _CustomGridViewState extends State<CustomGridView> {
                 AppRoutes.navigateToMovieDetails(
                   widget.movies[index],
                   context,
+                  Provider.of<GenresInMovieDetailBloc>(
+                    context,
+                    listen: false,
+                  ),
                 );
               },
               child: Column(
@@ -67,7 +73,8 @@ class _CustomGridViewState extends State<CustomGridView> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: CachedNetworkImageProvider(widget.movies[index].imagePath),
+                        image: CachedNetworkImageProvider(
+                            widget.movies[index].imagePath),
                       ),
                       borderRadius: circularBorder,
                       color: Colors.transparent,

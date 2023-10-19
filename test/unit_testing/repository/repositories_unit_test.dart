@@ -5,11 +5,11 @@ import 'package:movie_db_app/src/data/datasource/remote/i_api_service.dart';
 import 'package:movie_db_app/src/data/model/genre_page_model.dart';
 import 'package:movie_db_app/src/data/model/movie_page_model.dart';
 import 'package:movie_db_app/src/data/repository/genre_repository_class.dart';
-import 'package:movie_db_app/src/data/repository/movie_repository_class.dart';
+import 'package:movie_db_app/src/data/repository/movie_repository_from_apiservice.dart';
 
 class MovieApiProviderSuccess implements IApiService {
   @override
-  Future<MoviePageModel> fetch() async {
+  Future<MoviePageModel> fetch(String endpoint) async {
     return MoviePageModel.fromJson(
       {
         'page': 2,
@@ -41,7 +41,7 @@ class MovieApiProviderSuccess implements IApiService {
 
 class MovieApiProviderEmpty implements IApiService {
   @override
-  Future<MoviePageModel> fetch() async {
+  Future<MoviePageModel> fetch(String endpoint) async {
     return MoviePageModel.fromJson(
       {
         'page': 2,
@@ -55,14 +55,14 @@ class MovieApiProviderEmpty implements IApiService {
 
 class MovieApiProviderFailure implements IApiService {
   @override
-  Future fetch() {
+  Future fetch(String endpoint) {
     throw Exception('Error');
   }
 }
 
 class GenreApiProvideSuccess implements IApiService {
   @override
-  Future<GenrePageModel> fetch() async {
+  Future<GenrePageModel> fetch(String endpoint) async {
     return GenrePageModel.fromJson({
       'genres': [
         {"id": 53, "name": "Thriller"},
@@ -74,7 +74,7 @@ class GenreApiProvideSuccess implements IApiService {
 
 class GenreApiProvideEmpty implements IApiService {
   @override
-  Future<GenrePageModel> fetch() async {
+  Future<GenrePageModel> fetch(String endpoint) async {
     return GenrePageModel.fromJson({
       'genres': [],
     });
@@ -83,7 +83,7 @@ class GenreApiProvideEmpty implements IApiService {
 
 class GenreApiProvideFailure implements IApiService {
   @override
-  Future fetch() {
+  Future fetch(String endpoint) {
     throw Exception('Error');
   }
 }
@@ -92,8 +92,8 @@ void main() {
   group('testing each possibility in repositories', () {
     test('getData() from MovieRepository behave correctly in a success state',
         () async {
-      final MovieRepository repository = MovieRepository(
-        endpoint: Constants.homeEndpoint,
+      final MovieRepoFromApiService repository = MovieRepoFromApiService(
+        endpoint: Constants.topRatedMoviesEndpoint,
         apiService: MovieApiProviderSuccess(),
       );
       final DataState dataState = await repository.getData();
@@ -105,8 +105,9 @@ void main() {
 
     test('getData() from MovieRepository behave correctly in an empty state',
         () async {
-      final MovieRepository repository = MovieRepository(
-        endpoint: Constants.homeEndpoint,
+
+      final MovieRepoFromApiService repository = MovieRepoFromApiService(
+        endpoint: Constants.topRatedMoviesEndpoint,
         apiService: MovieApiProviderEmpty(),
       );
       final DataState dataState = await repository.getData();
@@ -118,8 +119,8 @@ void main() {
 
     test('getData() from MovieRepository behave correctly in an error state',
         () async {
-      final MovieRepository repository = MovieRepository(
-        endpoint: Constants.homeEndpoint,
+      final MovieRepoFromApiService repository = MovieRepoFromApiService(
+        endpoint: Constants.topRatedMoviesEndpoint,
         apiService: MovieApiProviderFailure(),
       );
       final DataState dataState = await repository.getData();

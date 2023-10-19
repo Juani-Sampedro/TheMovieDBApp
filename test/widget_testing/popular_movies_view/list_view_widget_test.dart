@@ -11,6 +11,7 @@ void main() {
           home: CustomListView(movies: [
         Movie(
             movieOverview: 'mo',
+            id: 1,
             voteAverage: 10,
             genres: [],
             originalTitle: 'ot',
@@ -19,7 +20,7 @@ void main() {
             imagePath: 'assets/images/backdrop.jpg',
             backdropPath: 'assets/images/backdrop.jpg',
             voteCount: 9,
-            language: 'EN')
+            language: 'EN', categories: [])
       ])));
       await tester.pump();
       final listFinder = find.byType(CustomListView);

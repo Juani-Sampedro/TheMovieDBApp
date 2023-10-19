@@ -6,11 +6,11 @@
 import 'dart:async' as _i6;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:movie_db_app/src/core/util/categories.dart' as _i7;
 import 'package:movie_db_app/src/core/util/states.dart' as _i4;
-import 'package:movie_db_app/src/data/datasource/remote/genres_api_service.dart'
-    as _i2;
+import 'package:movie_db_app/src/data/datasource/local/genre_db.dart' as _i3;
 import 'package:movie_db_app/src/data/repository/genre_repository_class.dart'
-    as _i3;
+    as _i2;
 import 'package:movie_db_app/src/domain/usecase/implementation/genres_usecase_impl.dart'
     as _i5;
 
@@ -25,9 +25,9 @@ import 'package:movie_db_app/src/domain/usecase/implementation/genres_usecase_im
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeGenresApiService_0 extends _i1.SmartFake
-    implements _i2.GenresApiService {
-  _FakeGenresApiService_0(
+class _FakeGenreRepository_0 extends _i1.SmartFake
+    implements _i2.GenreRepository {
+  _FakeGenreRepository_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -36,9 +36,8 @@ class _FakeGenresApiService_0 extends _i1.SmartFake
         );
 }
 
-class _FakeGenreRepository_1 extends _i1.SmartFake
-    implements _i3.GenreRepository {
-  _FakeGenreRepository_1(
+class _FakeGenreDatabase_1 extends _i1.SmartFake implements _i3.GenreDatabase {
+  _FakeGenreDatabase_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -66,44 +65,36 @@ class MockGenresUseCase extends _i1.Mock implements _i5.GenresUseCase {
   }
 
   @override
-  _i2.GenresApiService get apiService => (super.noSuchMethod(
-        Invocation.getter(#apiService),
-        returnValue: _FakeGenresApiService_0(
-          this,
-          Invocation.getter(#apiService),
-        ),
-      ) as _i2.GenresApiService);
-
-  @override
-  _i3.GenreRepository get repository => (super.noSuchMethod(
+  _i2.GenreRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
-        returnValue: _FakeGenreRepository_1(
+        returnValue: _FakeGenreRepository_0(
           this,
           Invocation.getter(#repository),
         ),
-      ) as _i3.GenreRepository);
+      ) as _i2.GenreRepository);
 
   @override
-  set repository(_i3.GenreRepository? _repository) => super.noSuchMethod(
-        Invocation.setter(
-          #repository,
-          _repository,
+  _i3.GenreDatabase get genreDatabase => (super.noSuchMethod(
+        Invocation.getter(#genreDatabase),
+        returnValue: _FakeGenreDatabase_1(
+          this,
+          Invocation.getter(#genreDatabase),
         ),
-        returnValueForMissingStub: null,
-      );
+      ) as _i3.GenreDatabase);
 
   @override
-  _i6.Future<_i4.DataState<dynamic>> call() => (super.noSuchMethod(
+  _i6.Future<_i4.DataState<dynamic>> call([_i7.CategoryEnum? category]) =>
+      (super.noSuchMethod(
         Invocation.method(
-          #repositoryCall,
-          [],
+          #call,
+          [category],
         ),
         returnValue:
             _i6.Future<_i4.DataState<dynamic>>.value(_FakeDataState_2<dynamic>(
           this,
           Invocation.method(
-            #repositoryCall,
-            [],
+            #call,
+            [category],
           ),
         )),
       ) as _i6.Future<_i4.DataState<dynamic>>);

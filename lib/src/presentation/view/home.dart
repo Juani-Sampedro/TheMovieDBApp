@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/util/colors.dart';
 import '../bloc/movie_list_bloc.dart';
@@ -9,10 +10,7 @@ import '../widget/text_under_app_bar.dart';
 class Home extends StatefulWidget {
   const Home({
     super.key,
-    required this.bloc,
   });
-
-  final MoviesBloc bloc;
 
   @override
   State<Home> createState() => _HomeState();
@@ -27,13 +25,12 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    widget.bloc.initialize();
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    widget.bloc.dispose();
+  void didChangeDependencies() {
+    Provider.of<MoviesBloc>(context).initialize();
+    super.didChangeDependencies();
   }
 
   @override
@@ -47,7 +44,8 @@ class _HomeState extends State<Home> {
             icon: topRatedIcon,
           ),
           Flexible(
-              child: CustomStreamBuilder.gridView(data: widget.bloc.allMovies)),
+              child: CustomStreamBuilder.gridView(
+                  data: Provider.of<MoviesBloc>(context).allMovies)),
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:mockito/annotations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:movie_db_app/src/core/util/categories.dart';
 import 'package:movie_db_app/src/core/util/states.dart';
 import 'package:movie_db_app/src/domain/model/movie.dart';
 import 'package:movie_db_app/src/domain/usecase/implementation/movies_usecase_impl.dart';
@@ -12,15 +13,16 @@ import 'movie_bloc_unit_test.mocks.dart';
 ])
 void main() {
   final mock = MockMoviesUseCase();
-  MoviesBloc bloc = MoviesBloc(useCase: mock);
+  MoviesBloc bloc = MoviesBloc(useCase: mock, category: CategoryEnum.popular);
   test(
     'checks if the movie stream has data',
     () async {
-      when(bloc.useCase.call()).thenAnswer(
+      when(bloc.useCase.call(CategoryEnum.popular)).thenAnswer(
         (realInvocation) => Future.value(
           DataState(
             data: [
               Movie(
+                id: 1,
                 language: 'en',
                 voteCount: 1234,
                 originalTitle: 'The Super Mario Bros. Movie',
@@ -40,6 +42,7 @@ void main() {
                     'While working underground to fix a water main, Brooklyn plumbers—and brothers—Mario and Luigi '
                     'are transported down a mysterious pipe and wander into a magical new world. But when the '
                     'brothers are separated, Mario embarks on an epic quest to find Luigi.',
+                categories: [],
               )
             ],
             resultState: ResultState.success,
