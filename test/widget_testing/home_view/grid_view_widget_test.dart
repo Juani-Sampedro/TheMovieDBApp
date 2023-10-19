@@ -12,6 +12,7 @@ void main() {
           home: CustomGridView(
             movies: [
               Movie(
+                id: 1,
                 movieOverview: 'mo',
                 voteAverage: 10,
                 genres: [],
@@ -21,7 +22,7 @@ void main() {
                 imagePath: 'assets/images/backdrop.jpg',
                 backdropPath: 'assets/images/backdrop.jpg',
                 voteCount: 9,
-                language: 'EN',
+                language: 'EN', categories: [],
               )
             ],
           ),

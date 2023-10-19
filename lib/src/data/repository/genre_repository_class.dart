@@ -4,21 +4,20 @@ import '../../domain/repository/interfaces/i_genre_repository.dart';
 import '../datasource/remote/genres_api_service.dart';
 import '../datasource/remote/i_api_service.dart';
 import '../model/genre_page_model.dart';
-import 'package:http/http.dart' as http;
 
 class GenreRepository implements IGenreRepository {
   final IApiService apiService;
+  static const url = '/genre/movie/list?';
 
-  GenreRepository({
-    IApiService? apiService,
-  }) : apiService = apiService ?? GenresApiService(client: http.Client());
+  GenreRepository({required this.apiService});
 
   @override
-  Future<DataState> getData() async {
+  Future<DataState<List<Genre>>> getData() async {
     try {
-      final GenrePageModel response = await apiService.fetch();
+      final GenrePageModel response = await apiService.fetch(url);
       return DataState(
-        resultState: response.results.isEmpty ? ResultState.empty : ResultState.success,
+        resultState:
+            response.results.isEmpty ? ResultState.empty : ResultState.success,
         data: response.results.map((genre) => genre).toList(),
       );
     } catch (e) {
@@ -29,7 +28,6 @@ class GenreRepository implements IGenreRepository {
     }
   }
 
-  @override
   dynamic getNameFromIds(
     List<int> genresIds,
     dynamic genres,

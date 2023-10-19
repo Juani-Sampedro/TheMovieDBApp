@@ -6,11 +6,12 @@
 import 'dart:async' as _i6;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:movie_db_app/src/core/util/categories.dart' as _i7;
 import 'package:movie_db_app/src/core/util/states.dart' as _i4;
-import 'package:movie_db_app/src/data/datasource/remote/movie_list_api_service.dart'
-    as _i3;
-import 'package:movie_db_app/src/data/repository/movie_repository_class.dart'
+import 'package:movie_db_app/src/data/repository/movie_repository_from_apiservice.dart'
     as _i2;
+import 'package:movie_db_app/src/data/repository/movie_repository_from_database.dart'
+    as _i3;
 import 'package:movie_db_app/src/domain/usecase/implementation/movies_usecase_impl.dart'
     as _i5;
 
@@ -25,9 +26,9 @@ import 'package:movie_db_app/src/domain/usecase/implementation/movies_usecase_im
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeMovieRepository_0 extends _i1.SmartFake
-    implements _i2.MovieRepository {
-  _FakeMovieRepository_0(
+class _FakeMovieRepoFromApiService_0 extends _i1.SmartFake
+    implements _i2.MovieRepoFromApiService {
+  _FakeMovieRepoFromApiService_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -36,9 +37,9 @@ class _FakeMovieRepository_0 extends _i1.SmartFake
         );
 }
 
-class _FakeMovieListApiService_1 extends _i1.SmartFake
-    implements _i3.MovieListApiService {
-  _FakeMovieListApiService_1(
+class _FakeMovieRepoFromDB_1 extends _i1.SmartFake
+    implements _i3.MovieRepoFromDB {
+  _FakeMovieRepoFromDB_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -66,50 +67,46 @@ class MockMoviesUseCase extends _i1.Mock implements _i5.MoviesUseCase {
   }
 
   @override
-  _i2.MovieRepository get repository => (super.noSuchMethod(
-        Invocation.getter(#repository),
-        returnValue: _FakeMovieRepository_0(
+  _i2.MovieRepoFromApiService get repoFromApiService => (super.noSuchMethod(
+        Invocation.getter(#repoFromApiService),
+        returnValue: _FakeMovieRepoFromApiService_0(
           this,
-          Invocation.getter(#repository),
+          Invocation.getter(#repoFromApiService),
         ),
-      ) as _i2.MovieRepository);
+      ) as _i2.MovieRepoFromApiService);
 
   @override
-  set repository(_i2.MovieRepository? _repository) => super.noSuchMethod(
+  set repoFromApiService(_i2.MovieRepoFromApiService? _repoFromApiService) =>
+      super.noSuchMethod(
         Invocation.setter(
-          #repository,
-          _repository,
+          #repoFromApiService,
+          _repoFromApiService,
         ),
         returnValueForMissingStub: null,
       );
 
   @override
-  _i3.MovieListApiService get apiService => (super.noSuchMethod(
-        Invocation.getter(#apiService),
-        returnValue: _FakeMovieListApiService_1(
+  _i3.MovieRepoFromDB get repoFromDB => (super.noSuchMethod(
+        Invocation.getter(#repoFromDB),
+        returnValue: _FakeMovieRepoFromDB_1(
           this,
-          Invocation.getter(#apiService),
+          Invocation.getter(#repoFromDB),
         ),
-      ) as _i3.MovieListApiService);
+      ) as _i3.MovieRepoFromDB);
 
   @override
-  String get endpoint => (super.noSuchMethod(
-        Invocation.getter(#endpoint),
-        returnValue: '',
-      ) as String);
-
-  @override
-  _i6.Future<_i4.DataState<dynamic>> call() => (super.noSuchMethod(
+  _i6.Future<_i4.DataState<dynamic>> call([_i7.CategoryEnum? categoryCall]) =>
+      (super.noSuchMethod(
         Invocation.method(
-          #repositoryCall,
-          [],
+          #call,
+          [categoryCall],
         ),
         returnValue:
             _i6.Future<_i4.DataState<dynamic>>.value(_FakeDataState_2<dynamic>(
           this,
           Invocation.method(
-            #repositoryCall,
-            [],
+            #call,
+            [categoryCall],
           ),
         )),
       ) as _i6.Future<_i4.DataState<dynamic>>);

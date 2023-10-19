@@ -1,3 +1,3 @@
 abstract class IApiService<T> {
-  Future<T> fetch();
+  Future<T> fetch(String endpoint);
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/util/colors.dart';
 import '../bloc/movie_list_bloc.dart';
 import '../widget/custom_scaffold.dart';
@@ -8,10 +9,7 @@ import '../widget/text_under_app_bar.dart';
 class FutureMovies extends StatefulWidget {
   const FutureMovies({
     super.key,
-    required this.bloc,
   });
-
-  final MoviesBloc bloc;
 
   @override
   State<FutureMovies> createState() => _FutureMoviesState();
@@ -30,7 +28,6 @@ class _FutureMoviesState extends State<FutureMovies> {
   @override
   void initState() {
     super.initState();
-    widget.bloc.initialize();
     _pageController = PageController(
       initialPage: _currentPage,
       viewportFraction: viewportFractionInCarousel,
@@ -38,10 +35,9 @@ class _FutureMoviesState extends State<FutureMovies> {
   }
 
   @override
-  void dispose() {
-    widget.bloc.dispose();
-    _pageController.dispose();
-    super.dispose();
+  void didChangeDependencies() {
+    Provider.of<MoviesBloc>(context).initialize();
+    super.didChangeDependencies();
   }
 
   @override
@@ -55,7 +51,7 @@ class _FutureMoviesState extends State<FutureMovies> {
           ),
           Flexible(
             child: CustomStreamBuilder.pageView(
-              data: widget.bloc.allMovies,
+              data: Provider.of<MoviesBloc>(context).allMovies,
               pageController: _pageController,
             ),
           ),

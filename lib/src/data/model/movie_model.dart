@@ -12,12 +12,16 @@ class MovieModel extends Movie {
     required super.imagePath,
     required super.backdropPath,
     required super.voteCount,
+    required super.id,
+    required super.categories,
   });
 
   factory MovieModel.fromJson(
     Map<String, dynamic> movieData,
   ) {
     return MovieModel(
+      categories: [],
+      id: movieData['id'] as int,
       movieOverview: movieData['overview'],
       voteCount: movieData['vote_count'],
       voteAverage: movieData['vote_average'].toDouble(),

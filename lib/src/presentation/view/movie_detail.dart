@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import '../../core/util/colors.dart';
 import '../../core/util/states.dart';
 import '../../data/datasource/remote/genres_api_service.dart';
 import '../../domain/model/movie.dart';
-import '../../domain/repository/interfaces/i_genre_repository.dart';
-import '../bloc/genres_in_movie_detail_bloc.dart';
 
+import '../bloc/genres_in_movie_detail_bloc.dart';
 import '../widget/error_message.dart';
 import 'about_us.dart';
 import '../../data/repository/genre_repository_class.dart';
@@ -17,13 +15,13 @@ import '../../core/util/constants.dart';
 
 class MovieDetail extends StatefulWidget {
   const MovieDetail({
-    super.key,
     required this.movie,
     required this.bloc,
+    super.key,
   });
 
-  final GenresInMovieDetailBloc bloc;
   final Movie movie;
+  final GenresInMovieDetailBloc bloc;
 
   @override
   State<MovieDetail> createState() => _MovieDetailState();
@@ -33,23 +31,21 @@ class _MovieDetailState extends State<MovieDetail> {
   late int _likeCounter;
   final double sizedBoxHeight = 20;
 
-  final IGenreRepository genreJsonManagement = GenreRepository(
-    apiService: GenresApiService(
-      client: Client(),
-    ),
+  final GenreRepository genreJsonManagement = GenreRepository(
+    apiService: GenresApiService(),
   );
 
   @override
   void initState() {
     super.initState();
-    widget.bloc.initialize();
+
     _likeCounter = widget.movie.voteCount;
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    widget.bloc.dispose();
+  void didChangeDependencies() {
+    widget.bloc.initialize();
+    super.didChangeDependencies();
   }
 
   _MovieDetailState();
@@ -113,7 +109,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                   setState(() => _likeCounter++);
                                 }
                               },
-                              backgroundColor: AppColors.likeButtonBackgroundColor,
+                              backgroundColor:
+                                  AppColors.likeButtonBackgroundColor,
                               splashColor: AppColors.likeButtonSplashColor,
                               label: Row(
                                 children: [
@@ -123,7 +120,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                   ),
                                   Text(
                                     ' $_likeCounter',
-                                    style: const TextStyle(color: AppColors.thumbUpIconColor),
+                                    style: const TextStyle(
+                                        color: AppColors.thumbUpIconColor),
                                   ),
                                 ],
                               ),
