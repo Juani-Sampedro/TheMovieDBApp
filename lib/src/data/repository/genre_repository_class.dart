@@ -1,7 +1,6 @@
 import '../../core/util/states.dart';
 import '../../domain/model/genre.dart';
 import '../../domain/repository/interfaces/i_genre_repository.dart';
-import '../datasource/remote/genres_api_service.dart';
 import '../datasource/remote/i_api_service.dart';
 import '../model/genre_page_model.dart';
 

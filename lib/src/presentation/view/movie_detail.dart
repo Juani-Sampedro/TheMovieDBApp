@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/util/colors.dart';
+import '../../core/util/notification_service.dart';
 import '../../core/util/states.dart';
 import '../../data/datasource/remote/genres_api_service.dart';
 import '../../domain/model/movie.dart';
@@ -30,7 +31,10 @@ class MovieDetail extends StatefulWidget {
 class _MovieDetailState extends State<MovieDetail> {
   late int _likeCounter;
   final double sizedBoxHeight = 20;
-
+  Icon favIcon = const Icon(
+    Icons.favorite_border,
+    color: Colors.red,
+  );
   final GenreRepository genreJsonManagement = GenreRepository(
     apiService: GenresApiService(),
   );
@@ -38,7 +42,6 @@ class _MovieDetailState extends State<MovieDetail> {
   @override
   void initState() {
     super.initState();
-
     _likeCounter = widget.movie.voteCount;
   }
 
@@ -101,8 +104,41 @@ class _MovieDetailState extends State<MovieDetail> {
                               .paddingHorizontalSymmetricForLikeCounterButton,
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            FloatingActionButton.extended(
+                              heroTag: null,
+                              onPressed: () {
+                                setState(() {
+                                  if (favIcon.icon == Icons.favorite_border) {
+                                    favIcon = const Icon(
+                                      Icons.favorite,
+                                      color: Colors.red,
+                                    );
+                                    NotificationService().showNotification(
+                                      title: 'Movie added to favorites',
+                                      body:
+                                          '${widget.movie.movieTitle} has been added to your favorite list of movies',
+                                    );
+                                  } else {
+                                    favIcon = const Icon(
+                                      Icons.favorite_border,
+                                      color: Colors.red,
+                                    );
+                                    NotificationService().showNotification(
+                                      title: 'Movie removed from favorites',
+                                      body:
+                                          '${widget.movie.movieTitle} has been removed from your favorite list of movies',
+                                    );
+                                  }
+                                });
+                              },
+                              backgroundColor: AppColors.favBackgroundColor,
+                              splashColor: AppColors.favButtonSplashColor,
+                              label: Row(
+                                children: [favIcon],
+                              ),
+                            ),
                             FloatingActionButton.extended(
                               onPressed: () {
                                 if (_likeCounter == widget.movie.voteCount) {
