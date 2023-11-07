@@ -1,3 +1,6 @@
+
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import '../../data/datasource/local/floor_movie_db.dart';
 import '../../data/datasource/local/genre_db.dart';
 import '../../data/datasource/local/movie_db.dart';
@@ -7,8 +10,10 @@ import '../../data/repository/genre_repository_class.dart';
 import '../../data/repository/genre_repository_from_database.dart';
 import '../../data/repository/movie_repository_from_apiservice.dart';
 import '../../data/repository/movie_repository_from_database.dart';
+import '../../domain/usecase/implementation/fav_movies_usecase_impl.dart';
 import '../../domain/usecase/implementation/genres_usecase_impl.dart';
 import '../../domain/usecase/implementation/movies_usecase_impl.dart';
+import '../../presentation/bloc/fav_bloc.dart';
 import '../../presentation/bloc/genres_in_movie_detail_bloc.dart';
 import '../../presentation/bloc/movie_list_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -33,12 +38,13 @@ class Initializer {
   late MoviesUseCase _upcomingMoviesUseCase;
   late MoviesUseCase _popularMoviesUseCase;
   late GenresUseCase _genresUseCase;
+  late FavMoviesUseCase _favMoviesUseCase;
 
   late MoviesBloc _topRatedMoviesBloc;
   late MoviesBloc _upcomingMoviesBloc;
   late MoviesBloc _popularMoviesBloc;
   late GenresInMovieDetailBloc _genresBloc;
-
+  late FavMoviesBloc _favMoviesBloc;
   late FloorMovieDatabase _floorDatabase;
 
   MoviesBloc get topRatedMoviesBloc => _topRatedMoviesBloc;
@@ -47,17 +53,22 @@ class Initializer {
 
   MoviesBloc get popularMoviesBloc => _popularMoviesBloc;
 
+  FavMoviesBloc get favMoviesBloc => _favMoviesBloc;
+
   GenresInMovieDetailBloc get genresBloc => _genresBloc;
 
   FloorMovieDatabase get database => _floorDatabase;
 
   Future<bool> initialize() async {
+
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.requestNotificationsPermission();
+
     _floorDatabase = await $FloorFloorMovieDatabase
         .databaseBuilder(Constants.databaseName)
         .build();
     _genreDatabase = GenreDatabase(_floorDatabase);
     _movieDatabase = MovieDatabase(_floorDatabase);
-
     _moviesApiService = MovieListApiService(client: http.Client());
     _genresApiService = GenresApiService();
 
@@ -93,7 +104,12 @@ class Initializer {
       repository: _genreRepository,
       repoFromDB: _genreRepoFromDB,
     );
+    _favMoviesUseCase = FavMoviesUseCase(
+      repoFromDB: _repoFromDB,
+    );
 
+
+    _favMoviesBloc = FavMoviesBloc(useCase: _favMoviesUseCase);
     _topRatedMoviesBloc = MoviesBloc(
       useCase: _topRatedMoviesUseCase,
       category: CategoryEnum.topRated,

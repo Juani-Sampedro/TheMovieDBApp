@@ -4,6 +4,7 @@ import '../../config/route/app_routes.dart';
 import '../../core/util/colors.dart';
 import '../../core/util/constants.dart';
 import '../../domain/model/movie.dart';
+import '../bloc/fav_bloc.dart';
 import '../bloc/genres_in_movie_detail_bloc.dart';
 import 'image.dart';
 
@@ -52,6 +53,10 @@ class DisplayMovie extends StatelessWidget {
           movie,
           context,
           Provider.of<GenresInMovieDetailBloc>(
+            context,
+            listen: false,
+          ),
+          Provider.of<FavMoviesBloc>(
             context,
             listen: false,
           ),

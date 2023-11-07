@@ -43,6 +43,11 @@ class _MyDrawerState extends State<MyDrawer> {
               text: DrawerRoute.upcoming.routeName,
               routeToGo: DrawerRoute.upcoming.route,
             ),
+            DrawerListTile(
+              icon: DrawerRoute.favorites.icon,
+              text: DrawerRoute.favorites.routeName,
+              routeToGo: DrawerRoute.favorites.route,
+            ),
           ],
         ),
       ),

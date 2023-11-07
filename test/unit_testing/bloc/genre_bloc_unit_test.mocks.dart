@@ -8,9 +8,10 @@ import 'dart:async' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:movie_db_app/src/core/util/categories.dart' as _i7;
 import 'package:movie_db_app/src/core/util/states.dart' as _i4;
-import 'package:movie_db_app/src/data/datasource/local/genre_db.dart' as _i3;
 import 'package:movie_db_app/src/data/repository/genre_repository_class.dart'
     as _i2;
+import 'package:movie_db_app/src/data/repository/genre_repository_from_database.dart'
+    as _i3;
 import 'package:movie_db_app/src/domain/usecase/implementation/genres_usecase_impl.dart'
     as _i5;
 
@@ -36,8 +37,9 @@ class _FakeGenreRepository_0 extends _i1.SmartFake
         );
 }
 
-class _FakeGenreDatabase_1 extends _i1.SmartFake implements _i3.GenreDatabase {
-  _FakeGenreDatabase_1(
+class _FakeGenreRepoFromDB_1 extends _i1.SmartFake
+    implements _i3.GenreRepoFromDB {
+  _FakeGenreRepoFromDB_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -74,13 +76,13 @@ class MockGenresUseCase extends _i1.Mock implements _i5.GenresUseCase {
       ) as _i2.GenreRepository);
 
   @override
-  _i3.GenreDatabase get genreDatabase => (super.noSuchMethod(
-        Invocation.getter(#genreDatabase),
-        returnValue: _FakeGenreDatabase_1(
+  _i3.GenreRepoFromDB get repoFromDB => (super.noSuchMethod(
+        Invocation.getter(#repoFromDB),
+        returnValue: _FakeGenreRepoFromDB_1(
           this,
-          Invocation.getter(#genreDatabase),
+          Invocation.getter(#repoFromDB),
         ),
-      ) as _i3.GenreDatabase);
+      ) as _i3.GenreRepoFromDB);
 
   @override
   _i6.Future<_i4.DataState<dynamic>> call([_i7.CategoryEnum? category]) =>

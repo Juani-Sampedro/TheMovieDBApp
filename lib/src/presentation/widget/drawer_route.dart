@@ -16,6 +16,11 @@ enum DrawerRoute {
     Icons.arrow_forward_outlined,
     'Upcoming Movies',
     Constants.upcomingMoviesRouteName,
+  ),
+  favorites(
+  Icons.favorite,
+  'Favorite Movies',
+  Constants.favoriteMoviesRouteName,
   );
 
   const DrawerRoute(

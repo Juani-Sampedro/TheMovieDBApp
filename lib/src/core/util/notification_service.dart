@@ -1,12 +1,15 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
+  final String channelId = 'channelId';
+  final String channelName = 'channelName';
+  final String imagePath = 'drawable/flutter_logo';
   final FlutterLocalNotificationsPlugin notificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   Future<void> initNotification() async {
     AndroidInitializationSettings initializationSettingsAndroid =
-    const AndroidInitializationSettings('drawable/flutter_logo');
+        AndroidInitializationSettings(imagePath);
     var initializationSettingsIOS = DarwinInitializationSettings(
         onDidReceiveLocalNotification:
             (int id, String? title, String? body, String? payload) async {});
@@ -22,13 +25,13 @@ class NotificationService {
   }
 
   notificationDetails() {
-    return const NotificationDetails(
+    return NotificationDetails(
       android: AndroidNotificationDetails(
-        'channelId',
-        'channelName',
+        channelId,
+        channelName,
         importance: Importance.max,
       ),
-      iOS: DarwinNotificationDetails(),
+      iOS: const DarwinNotificationDetails(),
     );
   }
 

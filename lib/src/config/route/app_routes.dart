@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../core/parameter/app_initializer.dart';
 import '../../core/util/constants.dart';
 import '../../domain/model/movie.dart';
+import '../../presentation/bloc/fav_bloc.dart';
 import '../../presentation/bloc/genres_in_movie_detail_bloc.dart';
+import '../../presentation/view/favorite_movies.dart';
 import '../../presentation/view/future_movies.dart';
 import '../../presentation/view/home.dart';
 import '../../presentation/view/movie_detail.dart';
@@ -16,6 +18,7 @@ class AppRoutes {
       Constants.homeRouteName: (context) => MultiProvider(
             providers: [
               Provider(create: (_) => initCore.genresBloc),
+              Provider(create: (_) => initCore.favMoviesBloc),
               Provider(create: (_) => initCore.topRatedMoviesBloc),
             ],
             child: const Home(),
@@ -23,6 +26,7 @@ class AppRoutes {
       Constants.popularMoviesRouteName: (context) => MultiProvider(
             providers: [
               Provider(create: (_) => initCore.genresBloc),
+              Provider(create: (_) => initCore.favMoviesBloc),
               Provider(create: (_) => initCore.popularMoviesBloc)
             ],
             child: const PopularMovies(),
@@ -30,9 +34,14 @@ class AppRoutes {
       Constants.upcomingMoviesRouteName: (context) => MultiProvider(
             providers: [
               Provider(create: (_) => initCore.genresBloc),
+              Provider(create: (_) => initCore.favMoviesBloc),
               Provider(create: (_) => initCore.upcomingMoviesBloc)
             ],
             child: const FutureMovies(),
+          ),
+      Constants.favoriteMoviesRouteName: (context) => MultiProvider(
+            providers: [Provider(create: (_) => initCore.favMoviesBloc)],
+            child: const FavoriteMovies(),
           ),
     };
   }
@@ -41,6 +50,7 @@ class AppRoutes {
     Movie movie,
     BuildContext context,
     GenresInMovieDetailBloc genresBloc,
+    FavMoviesBloc favBloc,
   ) {
     Navigator.push(
       context,
@@ -48,6 +58,7 @@ class AppRoutes {
         builder: (context) => MovieDetail(
           bloc: genresBloc,
           movie: movie,
+          favBloc: favBloc,
         ),
       ),
     );
