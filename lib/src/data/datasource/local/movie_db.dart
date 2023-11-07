@@ -38,6 +38,11 @@ class MovieDatabase implements IMovieDatabaseRepository<Movie> {
   }
 
   @override
+  Future<List<Movie>> fetchMovies() {
+    return _movieDB.movieDao.fetch();
+  }
+
+  @override
   Future<void> saveFavMovie({required FavMovie movie}) async {
     _movieDB.movieDao.insertFavMovie(movie);
   }

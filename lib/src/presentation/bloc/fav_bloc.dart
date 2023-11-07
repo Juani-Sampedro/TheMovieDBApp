@@ -31,7 +31,7 @@ class FavMoviesBloc implements IBloc {
     _movies.sink.add(
       DataState(resultState: ResultState.loading),
     );
-    final movies = await useCase.call();
+    final movies = await useCase.getFavoritesMovies();
     _movies.sink.add(movies);
   }
 

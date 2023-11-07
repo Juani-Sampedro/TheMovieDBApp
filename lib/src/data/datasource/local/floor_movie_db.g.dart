@@ -197,6 +197,26 @@ class _$MovieDao extends MovieDao {
   }
 
   @override
+  Future<List<Movie>> fetch() async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Movie JOIN FavMovie using(id)',
+        mapper: (Map<String, Object?> row) => Movie(
+            categories:
+                _listStringConverter.decode(row['categories'] as String),
+            id: row['id'] as int,
+            movieOverview: row['movieOverview'] as String,
+            voteAverage: row['voteAverage'] as double,
+            genres: _listIntConverter.decode(row['genres'] as String),
+            originalTitle: row['originalTitle'] as String,
+            dateRelease: row['dateRelease'] as String,
+            movieTitle: row['movieTitle'] as String,
+            imagePath: row['imagePath'] as String,
+            backdropPath: row['backdropPath'] as String,
+            voteCount: row['voteCount'] as int,
+            language: row['language'] as String));
+  }
+
+  @override
   Future<void> insertMovie(Movie movie) async {
     await _movieInsertionAdapter.insert(movie, OnConflictStrategy.replace);
   }

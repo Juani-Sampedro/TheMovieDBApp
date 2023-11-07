@@ -20,6 +20,7 @@ class _CustomFavViewState extends State<CustomFavView> {
     const SliverGridDelegate sliverGridDelegate =
         SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2,
+      crossAxisSpacing: 20,
     );
 
     const double textFontSize = 20;
@@ -28,19 +29,22 @@ class _CustomFavViewState extends State<CustomFavView> {
       decoration: Constants.backgroundDecoration,
       child: SafeArea(
         child: GridView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           itemCount: widget.movies.length,
           itemBuilder: (
             BuildContext context,
             int index,
           ) {
             return Center(
-                child: Text(
-              widget.movies.elementAt(index).id.toString(),
-              style: const TextStyle(
-                color: AppColors.appNameFontColor,
-                fontSize: textFontSize,
+              child: Text(
+                widget.movies.elementAt(index).movieTitle.toString(),
+                style: const TextStyle(
+                  color: AppColors.appNameFontColor,
+                  fontSize: textFontSize,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ));
+            );
           },
           gridDelegate: sliverGridDelegate,
         ),

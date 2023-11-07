@@ -26,6 +26,14 @@ class MovieRepoFromDB implements IMovieRepository {
     await movieDatabase.deleteFavMovie(movie: movie);
   }
 
+  Future<DataState> getFavMovies() async {
+    final movies = await movieDatabase.fetchMovies();
+    return DataState(
+      resultState: ResultState.success,
+      data: movies,
+    );
+  }
+
   Future<DataState> getFavData() async {
     final movies = await movieDatabase.getFavMovies();
     return DataState(

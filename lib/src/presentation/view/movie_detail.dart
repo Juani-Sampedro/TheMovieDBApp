@@ -17,8 +17,8 @@ import '../widget/subheader.dart';
 import '../../core/util/constants.dart';
 
 class MovieDetail extends StatefulWidget {
-   const MovieDetail({
-     required this.favBloc,
+  const MovieDetail({
+    required this.favBloc,
     required this.movie,
     required this.bloc,
     super.key,
@@ -26,7 +26,7 @@ class MovieDetail extends StatefulWidget {
 
   final Movie movie;
   final GenresInMovieDetailBloc bloc;
-   final FavMoviesBloc favBloc;
+  final FavMoviesBloc favBloc;
 
   @override
   State<MovieDetail> createState() => _MovieDetailState();
@@ -129,7 +129,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                     body:
                                         '${widget.movie.movieTitle} has been added to your favorite list of movies',
                                   );
-                                  widget.favBloc.addFavMovie(FavMovie(id: widget.movie.id));
+                                  widget.favBloc.addFavMovie(
+                                      FavMovie(id: widget.movie.id));
                                 } else {
                                   setState(() {
                                     favIcon = const Icon(
@@ -142,7 +143,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                     body:
                                         '${widget.movie.movieTitle} has been removed from your favorite list of movies',
                                   );
-                                  widget.favBloc.deleteFavMovie(FavMovie(id: widget.movie.id));
+                                  widget.favBloc.deleteFavMovie(
+                                      FavMovie(id: widget.movie.id));
                                 }
                               },
                               backgroundColor: AppColors.favBackgroundColor,

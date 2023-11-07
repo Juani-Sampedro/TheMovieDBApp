@@ -23,6 +23,10 @@ class FavMoviesUseCase implements IUseCase {
     return await repoFromDB.deleteFavMovie(favMovie);
   }
 
+  Future<DataState> getFavoritesMovies() async {
+    return await repoFromDB.getFavMovies();
+  }
+
   @override
   Future<DataState> call() async {
     return await repoFromDB.getFavData();

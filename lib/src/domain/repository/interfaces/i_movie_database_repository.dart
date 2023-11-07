@@ -15,4 +15,6 @@ abstract class IMovieDatabaseRepository<T> {
   Future<void> deleteFavMovie({required FavMovie movie});
 
   Future<T?> existById({required int id});
+
+  Future<List<T>> fetchMovies();
 }
