@@ -42,7 +42,7 @@ class _FavoriteMoviesState extends State<FavoriteMovies> {
             icon: favIcon,
           ),
           Flexible(
-            child: CustomStreamBuilder.favView(
+            child: CustomStreamBuilder.favMoviesGridView(
                 data: Provider.of<FavMoviesBloc>(context).allMovies),
           )
         ],

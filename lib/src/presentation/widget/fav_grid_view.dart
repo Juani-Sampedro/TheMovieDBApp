@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import '../../core/util/colors.dart';
 import '../../core/util/constants.dart';
 
-class CustomFavView extends StatefulWidget {
+class CustomFavGridView extends StatefulWidget {
   final List<dynamic> movies;
 
-  const CustomFavView({
+  const CustomFavGridView({
     super.key,
     required this.movies,
   });
 
   @override
-  State<CustomFavView> createState() => _CustomFavViewState();
+  State<CustomFavGridView> createState() => _CustomFavGridViewState();
 }
 
-class _CustomFavViewState extends State<CustomFavView> {
+class _CustomFavGridViewState extends State<CustomFavGridView> {
   @override
   Widget build(BuildContext context) {
     const SliverGridDelegate sliverGridDelegate =

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'fav_view.dart';
+import 'fav_grid_view.dart';
 import 'page_view.dart';
 
 import '../../core/util/states.dart';
@@ -39,12 +39,12 @@ class CustomStreamBuilder extends StatefulWidget {
     );
   }
 
-  factory CustomStreamBuilder.favView(
+  factory CustomStreamBuilder.favMoviesGridView(
       {required Stream<DataState<dynamic>> data}) {
     return CustomStreamBuilder(
       data: data,
       pageController: PageController(),
-      widgetType: CustomFavView,
+      widgetType: CustomFavGridView,
     );
   }
 
@@ -96,8 +96,8 @@ class _CustomStreamBuilderState extends State<CustomStreamBuilder> {
           case ResultState.success:
             if (widget.widgetType == CustomListView) {
               return CustomListView(movies: snapshot.data.data);
-            } else if(widget.widgetType == CustomFavView){
-              return CustomFavView(movies: snapshot.data.data);
+            } else if(widget.widgetType == CustomFavGridView){
+              return CustomFavGridView(movies: snapshot.data.data);
             } else if (widget.widgetType == CustomGridView) {
               return CustomGridView(movies: snapshot.data.data);
             } else {

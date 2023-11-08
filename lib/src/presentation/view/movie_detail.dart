@@ -123,13 +123,13 @@ class _MovieDetailState extends State<MovieDetail> {
                               heroTag: null,
                               onPressed: () async {
                                 if (!await widget.favBloc
-                                    .existById(widget.movie.id)) {
+                                    .existFavMovieById(widget.movie.id)) {
                                   NotificationService().showNotification(
                                     title: movieAddedToFavText,
                                     body:
                                         '${widget.movie.movieTitle} has been added to your favorite list of movies',
                                   );
-                                  widget.favBloc.addFavMovie(
+                                  widget.favBloc.saveFavMovie(
                                       FavMovie(id: widget.movie.id));
                                 }
                               },
@@ -143,7 +143,7 @@ class _MovieDetailState extends State<MovieDetail> {
                               heroTag: null,
                               onPressed: () async {
                                 if (await widget.favBloc
-                                    .existById(widget.movie.id)) {
+                                    .existFavMovieById(widget.movie.id)) {
                                   NotificationService().showNotification(
                                     title: movieRemovedFromFavText,
                                     body:

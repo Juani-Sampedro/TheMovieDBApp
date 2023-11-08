@@ -204,7 +204,7 @@ class _$MovieDao extends MovieDao {
   }
 
   @override
-  Future<List<Movie>> fetch() async {
+  Future<List<Movie>> joinMovieFavMovie() async {
     return _queryAdapter.queryList(
         'SELECT * FROM Movie JOIN FavMovie using(id)',
         mapper: (Map<String, Object?> row) => Movie(

@@ -1,9 +1,9 @@
 import '../../model/fav_movie.dart';
 
 abstract class IMovieDatabaseRepository<T> {
-  Future<List<T>> getMovies({required String category});
+  Future<List<T>> getAllMovies({required String category});
 
-  Future<List<FavMovie>> getFavMovies();
+  Future<List<FavMovie>> getAllFavMovies();
 
   Future<void> saveMovie({required T movie});
 
@@ -13,7 +13,7 @@ abstract class IMovieDatabaseRepository<T> {
 
   Future<bool> existFavMovieById({required int id});
 
-  Future<T?> existById({required int id});
+  Future<T?> existMovieById({required int id});
 
-  Future<List<T>> fetchMovies();
+  Future<List<T>> joinMovieFavMovie();
 }

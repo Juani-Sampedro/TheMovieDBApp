@@ -9,7 +9,7 @@ class MovieDatabase implements IMovieDatabaseRepository<Movie> {
   final FloorMovieDatabase _movieDB;
 
   @override
-  Future<List<Movie>> getMovies({required String category}) async =>
+  Future<List<Movie>> getAllMovies({required String category}) async =>
       _movieDB.movieDao.findAllMovies(category);
 
   @override
@@ -18,27 +18,28 @@ class MovieDatabase implements IMovieDatabaseRepository<Movie> {
   }
 
   @override
-  Future<Movie?> existById({required int id}) {
+  Future<Movie?> existMovieById({required int id}) {
     return _movieDB.movieDao.findMovieById(id);
   }
 
   @override
-  Future<bool> existFavMovieById({required int id}) async{
-    return await _movieDB.movieDao.findFavMovieById(id)!=null;
+  Future<bool> existFavMovieById({required int id}) async {
+    return await _movieDB.movieDao.findFavMovieById(id) != null;
   }
+
   @override
   Future<void> deleteFavMovie({required FavMovie movie}) async {
     _movieDB.movieDao.deleteFavMovie(movie);
   }
 
   @override
-  Future<List<FavMovie>> getFavMovies() {
+  Future<List<FavMovie>> getAllFavMovies() {
     return _movieDB.movieDao.findFavMovies();
   }
 
   @override
-  Future<List<Movie>> fetchMovies() {
-    return _movieDB.movieDao.fetch();
+  Future<List<Movie>> joinMovieFavMovie() {
+    return _movieDB.movieDao.joinMovieFavMovie();
   }
 
   @override

@@ -18,7 +18,7 @@ abstract class MovieDao {
   Future<FavMovie?> findFavMovieById(int id);
 
   @Query('SELECT * FROM Movie JOIN FavMovie using(id)')
-  Future<List<Movie>> fetch();
+  Future<List<Movie>> joinMovieFavMovie();
 
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertMovie(Movie movie);

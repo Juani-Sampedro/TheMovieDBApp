@@ -21,6 +21,16 @@ class _MyAppState extends State<MyApp> {
   late Initializer _initCore;
   late AppRoutes _routes;
 
+  final customCircularProgressIndicator = const Center(
+    heightFactor: 1,
+    widthFactor: 1,
+    child: SizedBox(
+      height: 40,
+      width: 40,
+      child: CircularProgressIndicator(strokeWidth: 1.5),
+    ),
+  );
+
   @override
   void initState() {
     super.initState();
@@ -42,9 +52,7 @@ class _MyAppState extends State<MyApp> {
             routes: _routes.routes(_initCore),
             debugShowCheckedModeBanner: false,
           );
-        } else {
-          return const CircularProgressIndicator();
-        }
+        } else {return customCircularProgressIndicator;}
       },
     );
   }

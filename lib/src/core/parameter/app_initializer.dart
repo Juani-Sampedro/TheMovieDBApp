@@ -22,14 +22,17 @@ import '../util/categories.dart';
 import '../util/constants.dart';
 
 class Initializer {
+  late FloorMovieDatabase _floorDatabase;
+
+  late MovieDatabase _movieDatabase;
+  late GenreDatabase _genreDatabase;
+
   late MovieListApiService _moviesApiService;
   late GenresApiService _genresApiService;
 
   late MovieRepoFromApiService _topRatedMovieRepositoryFromApiService;
   late MovieRepoFromApiService _upcomingMovieRepositoryFromApiService;
   late MovieRepoFromApiService _popularMoviesRepositoryFromApiService;
-  late MovieDatabase _movieDatabase;
-  late GenreDatabase _genreDatabase;
   late GenreRepository _genreRepository;
   late MovieRepoFromDB _repoFromDB;
   late GenreRepoFromDB _genreRepoFromDB;
@@ -45,7 +48,6 @@ class Initializer {
   late MoviesBloc _popularMoviesBloc;
   late GenresInMovieDetailBloc _genresBloc;
   late FavMoviesBloc _favMoviesBloc;
-  late FloorMovieDatabase _floorDatabase;
 
   MoviesBloc get topRatedMoviesBloc => _topRatedMoviesBloc;
 
@@ -64,11 +66,10 @@ class Initializer {
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.requestNotificationsPermission();
 
-    _floorDatabase = await $FloorFloorMovieDatabase
-        .databaseBuilder(Constants.databaseName)
-        .build();
+    _floorDatabase = await $FloorFloorMovieDatabase.databaseBuilder(Constants.databaseName).build();
     _genreDatabase = GenreDatabase(_floorDatabase);
     _movieDatabase = MovieDatabase(_floorDatabase);
+
     _moviesApiService = MovieListApiService(client: http.Client());
     _genresApiService = GenresApiService();
 
@@ -107,7 +108,6 @@ class Initializer {
     _favMoviesUseCase = FavMoviesUseCase(
       repoFromDB: _repoFromDB,
     );
-
 
     _favMoviesBloc = FavMoviesBloc(useCase: _favMoviesUseCase);
     _topRatedMoviesBloc = MoviesBloc(

@@ -10,8 +10,8 @@ class MovieRepoFromDB implements IMovieRepository {
 
   final MovieDatabase movieDatabase;
 
-  Future<Movie?> existById(int id) {
-    return movieDatabase.existById(id: id);
+  Future<Movie?> existMovieById(int id) {
+    return movieDatabase.existMovieById(id: id);
   }
 
   Future<bool> existFavMovieById(int id) {
@@ -30,16 +30,16 @@ class MovieRepoFromDB implements IMovieRepository {
     await movieDatabase.deleteFavMovie(movie: movie);
   }
 
-  Future<DataState> getFavMovies() async {
-    final movies = await movieDatabase.fetchMovies();
+  Future<DataState> getMoviesJoinFavMovies() async {
+    final movies = await movieDatabase.joinMovieFavMovie();
     return DataState(
       resultState: ResultState.success,
       data: movies,
     );
   }
 
-  Future<DataState> getFavData() async {
-    final movies = await movieDatabase.getFavMovies();
+  Future<DataState> getAllFavMovies() async {
+    final movies = await movieDatabase.getAllFavMovies();
     return DataState(
       resultState: ResultState.success,
       data: movies,
@@ -49,7 +49,7 @@ class MovieRepoFromDB implements IMovieRepository {
   @override
   Future<DataState> getData([CategoryEnum? categoryCall]) async {
     List<Movie> movies =
-        await movieDatabase.getMovies(category: categoryCall!.category);
+        await movieDatabase.getAllMovies(category: categoryCall!.category);
     if (movies.isNotEmpty) {
       return DataState(
         resultState: ResultState.success,

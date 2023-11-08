@@ -3,7 +3,6 @@ import 'dart:async';
 import '../../core/bloc/i_bloc.dart';
 import '../../core/util/states.dart';
 import '../../domain/model/fav_movie.dart';
-import '../../domain/model/movie.dart';
 import '../../domain/usecase/implementation/fav_movies_usecase_impl.dart';
 
 class FavMoviesBloc implements IBloc {
@@ -14,15 +13,15 @@ class FavMoviesBloc implements IBloc {
 
   Stream<DataState> get allMovies => _movies.stream;
 
-  Future<void> addFavMovie(FavMovie favMovie) async {
-    await useCase.addMovie(favMovie);
+  Future<void> saveFavMovie(FavMovie favMovie) async {
+    await useCase.saveFavMovie(favMovie);
   }
 
   Future<void> deleteFavMovie(FavMovie favMovie) async {
-    await useCase.removeMovie(favMovie);
+    await useCase.deleteFavMovie(favMovie);
   }
 
-  Future<bool> existById(int id) async {
+  Future<bool> existFavMovieById(int id) async {
     return await useCase.existFavMovieById(id);
   }
 
@@ -31,7 +30,7 @@ class FavMoviesBloc implements IBloc {
     _movies.sink.add(
       DataState(resultState: ResultState.loading),
     );
-    final movies = await useCase.getFavoritesMovies();
+    final movies = await useCase.getMoviesJoinFavMovies();
     _movies.sink.add(movies);
   }
 
