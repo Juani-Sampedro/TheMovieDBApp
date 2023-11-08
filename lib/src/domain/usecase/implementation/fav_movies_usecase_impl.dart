@@ -15,6 +15,10 @@ class FavMoviesUseCase implements IUseCase {
     return await repoFromDB.existById(id);
   }
 
+  Future<bool> existFavMovieById(int id) async {
+    return await repoFromDB.existFavMovieById(id);
+  }
+
   Future<void> addMovie(FavMovie favMovie) async {
     return await repoFromDB.saveFavMovie(favMovie);
   }

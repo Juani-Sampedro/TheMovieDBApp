@@ -14,6 +14,10 @@ class MovieRepoFromDB implements IMovieRepository {
     return movieDatabase.existById(id: id);
   }
 
+  Future<bool> existFavMovieById(int id) {
+    return movieDatabase.existFavMovieById(id: id);
+  }
+
   Future<void> saveMovie(Movie movie) async {
     await movieDatabase.saveMovie(movie: movie);
   }

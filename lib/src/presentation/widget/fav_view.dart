@@ -23,13 +23,14 @@ class _CustomFavViewState extends State<CustomFavView> {
       crossAxisSpacing: 20,
     );
 
-    const double textFontSize = 20;
+    const double textFontSize = 30;
+    const double padding = 20;
 
     return DecoratedBox(
       decoration: Constants.backgroundDecoration,
       child: SafeArea(
         child: GridView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: padding),
           itemCount: widget.movies.length,
           itemBuilder: (
             BuildContext context,
@@ -39,7 +40,8 @@ class _CustomFavViewState extends State<CustomFavView> {
               child: Text(
                 widget.movies.elementAt(index).movieTitle.toString(),
                 style: const TextStyle(
-                  color: AppColors.appNameFontColor,
+                  fontFamily: Constants.appFontFamily,
+                  color: AppColors.iconInTextUnderAppBarColor,
                   fontSize: textFontSize,
                   fontWeight: FontWeight.bold,
                 ),

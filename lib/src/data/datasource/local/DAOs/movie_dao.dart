@@ -14,6 +14,9 @@ abstract class MovieDao {
   @Query('SELECT * FROM Movie WHERE id = :id')
   Future<Movie?> findMovieById(int id);
 
+  @Query('SELECT * FROM FavMovie WHERE id = :id')
+  Future<FavMovie?> findFavMovieById(int id);
+
   @Query('SELECT * FROM Movie JOIN FavMovie using(id)')
   Future<List<Movie>> fetch();
 

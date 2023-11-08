@@ -33,7 +33,7 @@ class _FavoriteMoviesState extends State<FavoriteMovies> {
 
   @override
   Widget build(BuildContext context) {
-    const String favText = ' Favorite Movies ';
+    const String favText = ' My Favorite Movies ';
     return CustomScaffold(
       body: Column(
         children: [

@@ -22,8 +22,8 @@ class FavMoviesBloc implements IBloc {
     await useCase.removeMovie(favMovie);
   }
 
-  Future<Movie?> existById(int id) async {
-    return await useCase.existById(id);
+  Future<bool> existById(int id) async {
+    return await useCase.existFavMovieById(id);
   }
 
   @override

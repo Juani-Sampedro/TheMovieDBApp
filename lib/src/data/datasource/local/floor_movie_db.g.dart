@@ -197,6 +197,13 @@ class _$MovieDao extends MovieDao {
   }
 
   @override
+  Future<FavMovie?> findFavMovieById(int id) async {
+    return _queryAdapter.query('SELECT * FROM FavMovie WHERE id = ?1',
+        mapper: (Map<String, Object?> row) => FavMovie(id: row['id'] as int),
+        arguments: [id]);
+  }
+
+  @override
   Future<List<Movie>> fetch() async {
     return _queryAdapter.queryList(
         'SELECT * FROM Movie JOIN FavMovie using(id)',

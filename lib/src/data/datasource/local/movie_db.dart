@@ -18,15 +18,14 @@ class MovieDatabase implements IMovieDatabaseRepository<Movie> {
   }
 
   @override
-  Future<bool> existMovie(Movie movie) async {
-    return await _movieDB.movieDao.findMovieById(movie.id) != null;
-  }
-
-  @override
   Future<Movie?> existById({required int id}) {
     return _movieDB.movieDao.findMovieById(id);
   }
 
+  @override
+  Future<bool> existFavMovieById({required int id}) async{
+    return await _movieDB.movieDao.findFavMovieById(id)!=null;
+  }
   @override
   Future<void> deleteFavMovie({required FavMovie movie}) async {
     _movieDB.movieDao.deleteFavMovie(movie);

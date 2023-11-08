@@ -1,4 +1,3 @@
-
 import '../../model/fav_movie.dart';
 
 abstract class IMovieDatabaseRepository<T> {
@@ -6,13 +5,13 @@ abstract class IMovieDatabaseRepository<T> {
 
   Future<List<FavMovie>> getFavMovies();
 
-  Future<bool> existMovie(T movie);
-
   Future<void> saveMovie({required T movie});
 
   Future<void> saveFavMovie({required FavMovie movie});
 
   Future<void> deleteFavMovie({required FavMovie movie});
+
+  Future<bool> existFavMovieById({required int id});
 
   Future<T?> existById({required int id});
 
