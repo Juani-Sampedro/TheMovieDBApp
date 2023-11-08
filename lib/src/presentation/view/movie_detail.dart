@@ -35,6 +35,8 @@ class MovieDetail extends StatefulWidget {
 
 class _MovieDetailState extends State<MovieDetail> {
   final movieAddedToFavText = 'Movie added to favorites';
+  final movieAlreadyAdded = 'It was added before';
+  final movieAlreadyRemoved = 'It was removed before';
 
   final movieRemovedFromFavText = 'Movie removed from favorites';
 
@@ -131,9 +133,16 @@ class _MovieDetailState extends State<MovieDetail> {
                                   );
                                   widget.favBloc.saveFavMovie(
                                       FavMovie(id: widget.movie.id));
+                                } else {
+                                  NotificationService().showNotification(
+                                    title: movieAlreadyAdded,
+                                    body:
+                                        '${widget.movie.movieTitle} has already been added to your favorite list of movies',
+                                  );
                                 }
                               },
-                              backgroundColor: AppColors.likeButtonBackgroundColor,
+                              backgroundColor:
+                                  AppColors.likeButtonBackgroundColor,
                               splashColor: AppColors.likeButtonSplashColor,
                               label: Row(
                                 children: [addToFavIcon],
@@ -151,9 +160,16 @@ class _MovieDetailState extends State<MovieDetail> {
                                   );
                                   widget.favBloc.deleteFavMovie(
                                       FavMovie(id: widget.movie.id));
+                                } else {
+                                  NotificationService().showNotification(
+                                    title: movieAlreadyRemoved,
+                                    body:
+                                        '${widget.movie.movieTitle} has already been removed from your favorite list of movies',
+                                  );
                                 }
                               },
-                              backgroundColor: AppColors.likeButtonBackgroundColor,
+                              backgroundColor:
+                                  AppColors.likeButtonBackgroundColor,
                               splashColor: AppColors.likeButtonSplashColor,
                               label: Row(
                                 children: [removeFromFavIcon],
