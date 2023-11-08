@@ -1,9 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../core/util/colors.dart';
+import '../../core/util/notification_service.dart';
 import '../../core/util/states.dart';
 import '../../data/datasource/remote/genres_api_service.dart';
+import '../../domain/model/fav_movie.dart';
 import '../../domain/model/movie.dart';
 
+import '../bloc/fav_bloc.dart';
 import '../bloc/genres_in_movie_detail_bloc.dart';
 import '../widget/error_message.dart';
 import 'about_us.dart';
@@ -15,6 +19,7 @@ import '../../core/util/constants.dart';
 
 class MovieDetail extends StatefulWidget {
   const MovieDetail({
+    required this.favBloc,
     required this.movie,
     required this.bloc,
     super.key,
@@ -22,15 +27,29 @@ class MovieDetail extends StatefulWidget {
 
   final Movie movie;
   final GenresInMovieDetailBloc bloc;
+  final FavMoviesBloc favBloc;
 
   @override
   State<MovieDetail> createState() => _MovieDetailState();
 }
 
 class _MovieDetailState extends State<MovieDetail> {
+  final movieAddedToFavText = 'Movie added to favorites';
+  final movieAlreadyAdded = 'It was added before';
+  final movieAlreadyRemoved = 'It was removed before';
+
+  final movieRemovedFromFavText = 'Movie removed from favorites';
+
   late int _likeCounter;
   final double sizedBoxHeight = 20;
-
+  Icon removeFromFavIcon = const Icon(
+    CupertinoIcons.minus_square,
+    color: Colors.red,
+  );
+  Icon addToFavIcon = const Icon(
+    CupertinoIcons.plus_app,
+    color: Colors.green,
+  );
   final GenreRepository genreJsonManagement = GenreRepository(
     apiService: GenresApiService(),
   );
@@ -38,7 +57,6 @@ class _MovieDetailState extends State<MovieDetail> {
   @override
   void initState() {
     super.initState();
-
     _likeCounter = widget.movie.voteCount;
   }
 
@@ -101,8 +119,62 @@ class _MovieDetailState extends State<MovieDetail> {
                               .paddingHorizontalSymmetricForLikeCounterButton,
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            FloatingActionButton.extended(
+                              heroTag: null,
+                              onPressed: () async {
+                                if (!await widget.favBloc
+                                    .existFavMovieById(widget.movie.id)) {
+                                  NotificationService().showNotification(
+                                    title: movieAddedToFavText,
+                                    body:
+                                        '${widget.movie.movieTitle} has been added to your favorite list of movies',
+                                  );
+                                  widget.favBloc.saveFavMovie(
+                                      FavMovie(id: widget.movie.id));
+                                } else {
+                                  NotificationService().showNotification(
+                                    title: movieAlreadyAdded,
+                                    body:
+                                        '${widget.movie.movieTitle} has already been added to your favorite list of movies',
+                                  );
+                                }
+                              },
+                              backgroundColor:
+                                  AppColors.likeButtonBackgroundColor,
+                              splashColor: AppColors.likeButtonSplashColor,
+                              label: Row(
+                                children: [addToFavIcon],
+                              ),
+                            ),
+                            FloatingActionButton.extended(
+                              heroTag: null,
+                              onPressed: () async {
+                                if (await widget.favBloc
+                                    .existFavMovieById(widget.movie.id)) {
+                                  NotificationService().showNotification(
+                                    title: movieRemovedFromFavText,
+                                    body:
+                                        '${widget.movie.movieTitle} has been removed from your favorite list of movies',
+                                  );
+                                  widget.favBloc.deleteFavMovie(
+                                      FavMovie(id: widget.movie.id));
+                                } else {
+                                  NotificationService().showNotification(
+                                    title: movieAlreadyRemoved,
+                                    body:
+                                        '${widget.movie.movieTitle} has already been removed from your favorite list of movies',
+                                  );
+                                }
+                              },
+                              backgroundColor:
+                                  AppColors.likeButtonBackgroundColor,
+                              splashColor: AppColors.likeButtonSplashColor,
+                              label: Row(
+                                children: [removeFromFavIcon],
+                              ),
+                            ),
                             FloatingActionButton.extended(
                               onPressed: () {
                                 if (_likeCounter == widget.movie.voteCount) {

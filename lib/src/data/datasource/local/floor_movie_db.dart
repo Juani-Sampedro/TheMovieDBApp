@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
+import '../../../domain/model/fav_movie.dart';
 import '../../../domain/model/genre.dart';
 import '../../../domain/model/movie.dart';
 import 'DAOs/genre_dao.dart';
@@ -17,6 +18,7 @@ part 'floor_movie_db.g.dart';
   entities: <Type>[
     Movie,
     Genre,
+    FavMovie,
   ],
 )
 abstract class FloorMovieDatabase extends FloorDatabase {

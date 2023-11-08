@@ -15,6 +15,7 @@ class Constants {
   static const String databaseName = 'movie_database.db';
   static const String homeRouteName = '/home';
   static const String popularMoviesRouteName = '/popularMovies';
+  static const String favoriteMoviesRouteName = '/favoriteMovies';
   static const String upcomingMoviesRouteName = '/upcomingMovies';
   static const String baseUrl = 'https://api.themoviedb.org';
   static const String popularMoviesEndpoint = '/3/movie/popular';

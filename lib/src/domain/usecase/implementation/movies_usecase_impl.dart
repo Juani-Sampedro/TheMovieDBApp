@@ -26,7 +26,7 @@ class MoviesUseCase implements IUseCase {
       dataStateMovie = (await repoFromApiService.getData());
       movies = dataStateMovie.data;
       for (var movie in movies!) {
-        Movie? movieInDataBase = await repoFromDB.existById(movie.id);
+        Movie? movieInDataBase = await repoFromDB.existMovieById(movie.id);
         if (movieInDataBase != null) {
           if (!movieInDataBase.categories.contains(categoryCall!.category)) {
             movieInDataBase.categories.add(categoryCall.category);

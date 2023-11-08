@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'src/core/util/notification_service.dart';
 import 'src/core/util/constants.dart';
 import 'src/core/parameter/app_initializer.dart';
 import 'src/config/route/app_routes.dart';
 
-void main() async {
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
   runApp(const MyApp());
 }
 
@@ -17,6 +20,16 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late Initializer _initCore;
   late AppRoutes _routes;
+
+  final customCircularProgressIndicator = const Center(
+    heightFactor: 1,
+    widthFactor: 1,
+    child: SizedBox(
+      height: 40,
+      width: 40,
+      child: CircularProgressIndicator(strokeWidth: 1.5),
+    ),
+  );
 
   @override
   void initState() {
@@ -39,9 +52,7 @@ class _MyAppState extends State<MyApp> {
             routes: _routes.routes(_initCore),
             debugShowCheckedModeBanner: false,
           );
-        } else {
-          return const CircularProgressIndicator();
-        }
+        } else {return customCircularProgressIndicator;}
       },
     );
   }
